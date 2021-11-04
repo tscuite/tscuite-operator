@@ -50,7 +50,7 @@ func (r *BoyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	_ = log.FromContext(ctx)
 	_ = log.Log.WithValues("boy", req.NamespacedName)
 	log.Log.Info("app changed", "ns", req.Namespace)
-	log.Log.Info("app changed", "ns", req.String())
+	log.Log.Info("app changed", "ns", req)
 
 	// TODO(user): your logic here
 
