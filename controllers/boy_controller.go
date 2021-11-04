@@ -48,6 +48,8 @@ type BoyReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.10.0/pkg/reconcile
 func (r *BoyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
+	_ = log.Log.WithValues("boy", req.NamespacedName)
+	log.Log.Info("app changed", "ns", req.Namespace)
 
 	// TODO(user): your logic here
 
