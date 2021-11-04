@@ -30,6 +30,7 @@ type BoySpec struct {
 
 	// Foo is an example field of Boy. Edit boy_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
+	Cdz string `json:"cdz,omitempty"`
 }
 
 // BoyStatus defines the observed state of Boy
