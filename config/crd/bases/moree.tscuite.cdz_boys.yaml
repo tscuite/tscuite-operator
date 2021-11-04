@@ -40,6 +40,10 @@ spec:
                 description: Foo is an example field of Boy. Edit boy_types.go to
                   remove/update
                 type: string
+              cdz:
+                description: Foo is an example field of Boy. Edit boy_types.go to
+                  remove/update
+                type: string
             type: object
           status:
             description: BoyStatus defines the observed state of Boy
