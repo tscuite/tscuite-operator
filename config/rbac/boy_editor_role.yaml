@@ -1,0 +1,24 @@
+# permissions for end users to edit boys.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: boy-editor-role
+rules:
+- apiGroups:
+  - moree.tscuite.cdz
+  resources:
+  - boys
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - moree.tscuite.cdz
+  resources:
+  - boys/status
+  verbs:
+  - get

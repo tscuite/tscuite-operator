@@ -1,0 +1,16 @@
+domain: tscuite.cdz
+layout:
+- go.kubebuilder.io/v3
+projectName: tscuite
+repo: tscuite.cdz/boy
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: tscuite.cdz
+  group: moree
+  kind: Boy
+  path: tscuite.cdz/boy/api/v1
+  version: v1
+version: "3"

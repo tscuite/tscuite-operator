@@ -1,0 +1,6 @@
+apiVersion: moree.tscuite.cdz/v1
+kind: Boy
+metadata:
+  name: boy-sample
+spec:
+  # TODO(user): Add fields here
