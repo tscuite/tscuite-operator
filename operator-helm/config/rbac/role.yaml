@@ -29,10 +29,10 @@ rules:
   - create
 
 ##
-## Rules for demo.example.com/v1alpha1, Kind: Nginx
+## Rules for tscuite.registry.cn-hangzhou.aliyuncs.com/v1, Kind: Nginx
 ##
 - apiGroups:
-  - demo.example.com
+  - tscuite.registry.cn-hangzhou.aliyuncs.com
   resources:
   - nginxes
   - nginxes/status

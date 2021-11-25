@@ -5,7 +5,7 @@ metadata:
   name: nginx-viewer-role
 rules:
 - apiGroups:
-  - demo.example.com
+  - tscuite.registry.cn-hangzhou.aliyuncs.com
   resources:
   - nginxes
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - demo.example.com
+  - tscuite.registry.cn-hangzhou.aliyuncs.com
   resources:
   - nginxes/status
   verbs:

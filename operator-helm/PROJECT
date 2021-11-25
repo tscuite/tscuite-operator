@@ -1,16 +1,16 @@
-domain: example.com
+domain: registry.cn-hangzhou.aliyuncs.com
 layout:
 - helm.sdk.operatorframework.io/v1
 plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
-projectName: operator-helm
+projectName: test
 resources:
 - api:
     crdVersion: v1
     namespaced: true
-  domain: example.com
-  group: demo
+  domain: registry.cn-hangzhou.aliyuncs.com
+  group: tscuite
   kind: Nginx
-  version: v1alpha1
+  version: v1
 version: "3"
