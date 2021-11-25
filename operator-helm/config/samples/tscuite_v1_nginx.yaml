@@ -11,10 +11,10 @@ spec:
     minReplicas: 1
     targetCPUUtilizationPercentage: 80
   fullnameOverride: ""
-  image:
-    pullPolicy: IfNotPresent
-    repository: nginx
-    tag: ""
+  #image:
+  #  pullPolicy: IfNotPresent
+  #  repository: ""
+  #  tag: ""
   imagePullSecrets: []
   ingress:
     annotations: {}
