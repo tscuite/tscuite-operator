@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: registry.cn-hangzhou.aliyuncs.com/tscuite/nginx-lua
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.14.0-3
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
