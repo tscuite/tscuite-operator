@@ -1,0 +1,6 @@
+apiVersion: tscuite.registry.cn-hangzhou.aliyuncs.com/v1
+kind: Nginx
+metadata:
+  name: nginx-sample
+spec:
+  # Add fields here

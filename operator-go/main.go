@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	cachev1alpha1 "github.com/example/memcached-operator/api/v1alpha1"
+	tscuitev1 "github.com/example/memcached-operator/api/v1"
 	"github.com/example/memcached-operator/controllers"
 	//+kubebuilder:scaffold:imports
 )
@@ -44,7 +44,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(cachev1alpha1.AddToScheme(scheme))
+	utilruntime.Must(tscuitev1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -71,18 +71,18 @@ func main() {
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "86f835c3.example.com",
+		LeaderElectionID:       "86f835c3.registry.cn-hangzhou.aliyuncs.com",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
 
-	if err = (&controllers.MemcachedReconciler{
+	if err = (&controllers.NginxReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Memcached")
+		setupLog.Error(err, "unable to create controller", "controller", "Nginx")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder
