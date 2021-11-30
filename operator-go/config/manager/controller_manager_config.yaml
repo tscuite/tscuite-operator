@@ -8,4 +8,4 @@ webhook:
   port: 9443
 leaderElection:
   leaderElect: true
-  resourceName: 86f835c3.registry.cn-hangzhou.aliyuncs.com
+  resourceName: f6d5007b.registry.cn-hangzhou.aliyuncs.com

@@ -36,11 +36,9 @@ spec:
           spec:
             description: BoySpec defines the desired state of Boy
             properties:
-              foo:
-                description: Foo is an example field of Boy. Edit boy_types.go to
-                  remove/update
-                type: string
               cdz:
+                type: string
+              foo:
                 description: Foo is an example field of Boy. Edit boy_types.go to
                   remove/update
                 type: string

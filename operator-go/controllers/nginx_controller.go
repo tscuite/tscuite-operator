@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	tscuitev1 "github.com/example/memcached-operator/api/v1"
+	tscuitev2 "github.com/tscuite/crd/operator-go/api/v2"
 )
 
 // NginxReconciler reconciles a Nginx object
@@ -57,6 +57,6 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 // SetupWithManager sets up the controller with the Manager.
 func (r *NginxReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&tscuitev1.Nginx{}).
+		For(&tscuitev2.Nginx{}).
 		Complete(r)
 }

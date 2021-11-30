@@ -31,8 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	tscuitev1 "github.com/example/memcached-operator/api/v1"
-	"github.com/example/memcached-operator/controllers"
+	tscuitev2 "github.com/tscuite/crd/operator-go/api/v2"
+	"github.com/tscuite/crd/operator-go/controllers"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -44,7 +44,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(tscuitev1.AddToScheme(scheme))
+	utilruntime.Must(tscuitev2.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -71,7 +71,7 @@ func main() {
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "86f835c3.registry.cn-hangzhou.aliyuncs.com",
+		LeaderElectionID:       "f6d5007b.registry.cn-hangzhou.aliyuncs.com",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")

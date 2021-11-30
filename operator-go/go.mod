@@ -1,4 +1,4 @@
-module github.com/example/memcached-operator
+module github.com/tscuite/crd/operator-go
 
 go 1.16
 

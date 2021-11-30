@@ -5,7 +5,7 @@ plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: operator-go
-repo: github.com/example/memcached-operator
+repo: github.com/tscuite/crd/operator-go
 resources:
 - api:
     crdVersion: v1
@@ -14,6 +14,6 @@ resources:
   domain: registry.cn-hangzhou.aliyuncs.com
   group: tscuite
   kind: Nginx
-  path: github.com/example/memcached-operator/api/v1
-  version: v1
+  path: github.com/tscuite/crd/operator-go/api/v2
+  version: v2
 version: "3"
