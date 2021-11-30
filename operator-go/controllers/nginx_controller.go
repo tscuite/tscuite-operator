@@ -50,6 +50,10 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	_ = log.FromContext(ctx)
 
 	// your logic here
+	log.Log.WithValues("boy", req.NamespacedName)
+	log.Log.Info("app changed", "ns", req)
+	log.Log.Info("app changed", "ns", req.NamespacedName)
+	log.Log.Info("app changed", "ns", ctx)
 
 	return ctrl.Result{}, nil
 }
