@@ -73,7 +73,7 @@ func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
 			ImagePullPolicy: kubernetesv1.PullIfNotPresent,
 			Ports: []kubernetesv1.ContainerPort{
 				{
-					ContainerPort: nginx.Spec.Prot,
+					ContainerPort: nginx.Spec.ContainerPort,
 				},
 			},
 		},
