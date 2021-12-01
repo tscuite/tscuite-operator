@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: registry.cn-hangzhou.aliyuncs.com/tscuite/crd
-  newTag: go-v2
+  newTag: go-v6
