@@ -20,12 +20,13 @@ import (
 	"context"
 	"fmt"
 
-	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
 	kubernetesv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+
+	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
 )
 
 // NginxReconciler reconciles a Nginx object
