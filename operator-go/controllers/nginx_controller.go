@@ -59,13 +59,19 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	if err := r.Get(ctx, req.NamespacedName, nginx); err != nil {
 		fmt.Println(err)
 	} else {
-		err = CreatePod(r.Client, nginx)
+		err = Deployment(r.Client, nginx)
 		return ctrl.Result{}, err
 	}
 	return ctrl.Result{}, nil
 }
-
-func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
+func Operator(client client.Client, deployment *appsv1.Deployment) error {
+	//新建
+	//err := client.Create(context.Background(), deployment)
+	//更新
+	err := client.Update(context.Background(), deployment)
+	return err
+}
+func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 	var memory corev1.ResourceRequirements
 	var replicas int32 = nginx.Spec.Replicas
 	data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
@@ -94,15 +100,16 @@ func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{Name: nginx.Name,
-							Image:     nginx.Spec.Images,
-							Resources: memory,
+							Image:           nginx.Spec.Images,
+							Resources:       memory,
+							ImagePullPolicy: corev1.PullIfNotPresent,
 						},
 					},
 				},
 			},
 		},
 	}
-	return client.Create(context.Background(), deployment)
+	return Operator(client, deployment)
 }
 
 // SetupWithManager sets up the controller with the Manager.
