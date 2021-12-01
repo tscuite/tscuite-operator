@@ -30,7 +30,7 @@ type NginxSpec struct {
 
 	// Foo is an example field of Nginx. Edit nginx_types.go to remove/update
 	Foo        string `json:"foo,omitempty"`
-	Prot       int32  `json:"prot,omitempty"`
+	Prot       int    `json:"prot,omitempty"`
 	Containers string `json:"containers,omitempty"`
 	Images     string `json:"images,omitempty"`
 }
