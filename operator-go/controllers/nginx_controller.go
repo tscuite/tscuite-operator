@@ -18,7 +18,9 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
+	kubernetesv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -50,8 +52,33 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	_ = log.FromContext(ctx)
 
 	// your logic here
-
+	nginx := &tscuitev1.Nginx{}
+	if err := r.Get(ctx, req.NamespacedName, nginx); err != nil {
+		fmt.Println(err)
+	} else {
+		err = CreatePod(r.Client, nginx)
+		return ctrl.Result{}, err
+	}
 	return ctrl.Result{}, nil
+}
+
+func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
+	newPod := &kubernetesv1.Pod{}
+	newPod.Name = nginx.Name
+	newPod.Namespace = nginx.Namespace
+	newPod.Spec.Containers = []kubernetesv1.Container{
+		{
+			Name:            nginx.Name,
+			Image:           nginx.Spec.Images,
+			ImagePullPolicy: kubernetesv1.PullIfNotPresent,
+			Ports: []kubernetesv1.ContainerPort{
+				{
+					ContainerPort: nginx.Spec.Prot,
+				},
+			},
+		},
+	}
+	return client.Create(context.Background(), newPod)
 }
 
 // SetupWithManager sets up the controller with the Manager.
