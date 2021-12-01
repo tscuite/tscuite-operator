@@ -67,7 +67,7 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 
 func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
 	var memory corev1.ResourceRequirements
-	var prot int32 = nginx.Spec.Port
+	var replicas int32 = nginx.Spec.Replicas
 	data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
 	json.Unmarshal([]byte(data), &memory)
 	deployment := &appsv1.Deployment{
@@ -79,7 +79,12 @@ func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
-			Replicas: &prot,
+			Replicas: &replicas,
+			Selector: &metav1.LabelSelector{
+				MatchLabels: map[string]string{
+					"app": nginx.Name,
+				},
+			},
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{

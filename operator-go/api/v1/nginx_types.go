@@ -29,8 +29,9 @@ type NginxSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Nginx. Edit nginx_types.go to remove/update
-	Port   int32  `json:"port" protobuf:"varint,3,opt,name=port"`
-	Images string `json:"images,omitempty"`
+	Port     int32  `json:"port" protobuf:"varint,3,opt,name=port"`
+	Images   string `json:"images,omitempty"`
+	Replicas int32  `json:"replicas" protobuf:"varint,3,opt,name=replicas"`
 }
 
 // NginxStatus defines the observed state of Nginx

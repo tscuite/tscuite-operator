@@ -4,6 +4,7 @@ metadata:
   name: nginx-cdz
   namespace: default
 spec:
+  replicas: 2
   port: 80
   images: nginx:1.16
   # Add fields here
