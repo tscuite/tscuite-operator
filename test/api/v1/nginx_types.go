@@ -29,7 +29,10 @@ type NginxSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Nginx. Edit nginx_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Foo        string `json:"foo,omitempty"`
+	Prot       int32  `json:"prot,omitempty"`
+	Containers string `json:"containers,omitempty"`
+	Images     string `json:"images,omitempty"`
 }
 
 // NginxStatus defines the observed state of Nginx
