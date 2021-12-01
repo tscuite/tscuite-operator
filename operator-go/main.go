@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	tscuitev2 "github.com/tscuite/crd/operator-go/api/v2"
+	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
 	"github.com/tscuite/crd/operator-go/controllers"
 	//+kubebuilder:scaffold:imports
 )
@@ -44,7 +44,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(tscuitev2.AddToScheme(scheme))
+	utilruntime.Must(tscuitev1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -83,10 +83,6 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Nginx")
-		os.Exit(1)
-	}
-	if err = (&tscuitev2.Nginx{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", "webhook", "Nginx")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	tscuitev2 "github.com/tscuite/crd/operator-go/api/v2"
+	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
 )
 
 // NginxReconciler reconciles a Nginx object
@@ -50,10 +50,6 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	_ = log.FromContext(ctx)
 
 	// your logic here
-	log.Log.WithValues("boy", req.NamespacedName)
-	log.Log.Info("app changed", "ns", req)
-	log.Log.Info("app changed", "ns", req.NamespacedName)
-	log.Log.Info("app changed", "ns", ctx)
 
 	return ctrl.Result{}, nil
 }
@@ -61,6 +57,6 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 // SetupWithManager sets up the controller with the Manager.
 func (r *NginxReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&tscuitev2.Nginx{}).
+		For(&tscuitev1.Nginx{}).
 		Complete(r)
 }

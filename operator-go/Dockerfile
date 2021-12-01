@@ -1,7 +1,6 @@
 # Build the manager binary
 FROM golang:1.16 as builder
 ENV GOPROXY https://goproxy.cn,direct
-
 WORKDIR /workspace
 # Copy the Go Modules manifests
 COPY go.mod go.mod
