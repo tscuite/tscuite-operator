@@ -18,9 +18,12 @@ package controllers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
-	kubernetesv1 "k8s.io/api/core/v1"
+	appsv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -63,22 +66,38 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 }
 
 func CreatePod(client client.Client, nginx *tscuitev1.Nginx) error {
-	newPod := &kubernetesv1.Pod{}
-	newPod.Name = nginx.Name
-	newPod.Namespace = nginx.Namespace
-	newPod.Spec.Containers = []kubernetesv1.Container{
-		{
-			Name:            nginx.Name,
-			Image:           nginx.Spec.Images,
-			ImagePullPolicy: kubernetesv1.PullIfNotPresent,
-			Ports: []kubernetesv1.ContainerPort{
-				{
-					ContainerPort: nginx.Spec.ContainerPort,
+	var memory corev1.ResourceRequirements
+	var prot int32 = nginx.Spec.Port
+	data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
+	json.Unmarshal([]byte(data), &memory)
+	deployment := &appsv1.Deployment{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      nginx.Name,
+			Namespace: nginx.Namespace,
+			Labels: map[string]string{
+				"app": nginx.Name,
+			},
+		},
+		Spec: appsv1.DeploymentSpec{
+			Replicas: &prot,
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Labels: map[string]string{
+						"app": nginx.Name,
+					},
+				},
+				Spec: corev1.PodSpec{
+					Containers: []corev1.Container{
+						{Name: nginx.Name,
+							Image:     nginx.Spec.Images,
+							Resources: memory,
+						},
+					},
 				},
 			},
 		},
 	}
-	return client.Create(context.Background(), newPod)
+	return client.Create(context.Background(), deployment)
 }
 
 // SetupWithManager sets up the controller with the Manager.
