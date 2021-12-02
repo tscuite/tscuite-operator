@@ -25,6 +25,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -103,6 +104,40 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 							Image:           nginx.Spec.Images,
 							Resources:       memory,
 							ImagePullPolicy: corev1.PullIfNotPresent,
+							Ports: []corev1.ContainerPort{
+								{
+									ContainerPort: nginx.Spec.Port,
+									Name:          nginx.Name,
+									Protocol:      "TCP",
+								},
+							},
+							LivenessProbe: &corev1.Probe{
+								FailureThreshold:    5,
+								InitialDelaySeconds: 60,
+								PeriodSeconds:       10,
+								SuccessThreshold:    1,
+								TimeoutSeconds:      5,
+								Handler: corev1.Handler{
+									HTTPGet: &corev1.HTTPGetAction{
+										Path:   "/ready",
+										Scheme: "HTTP",
+										Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									},
+								},
+							},
+							ReadinessProbe: &corev1.Probe{
+								FailureThreshold: 3,
+								PeriodSeconds:    10,
+								SuccessThreshold: 1,
+								TimeoutSeconds:   1,
+								Handler: corev1.Handler{
+									HTTPGet: &corev1.HTTPGetAction{
+										Path:   "/ready",
+										Scheme: "HTTP",
+										Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									},
+								},
+							},
 						},
 					},
 				},
