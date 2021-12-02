@@ -99,7 +99,6 @@ func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deploy
 					Containers: []corev1.Container{
 						{Name: nginx.Name,
 							Image: nginx.Spec.Images,
-							//Resources:       memory,
 							Resources: corev1.ResourceRequirements{
 								Limits: corev1.ResourceList{
 									corev1.ResourceCPU:    resource.MustParse("10m"),
