@@ -55,20 +55,20 @@ type NginxReconciler struct {
 func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 	NginxV1 := &tscuitev1.Nginx{}
-	NginxPod := r.NginxDeployment(NginxV1)
 	if err := r.Get(ctx, req.NamespacedName, NginxV1); err != nil {
 		fmt.Println(err)
 	} else {
+		NginxPod := r.NginxDeployment(NginxV1)
 		return ctrl.Result{}, r.NginxOperator(ctx, req, NginxPod)
 	}
 	return ctrl.Result{}, nil
 }
 func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
 	if err := r.Client.Get(ctx, req.NamespacedName, nginxdeployment); err != nil {
-		log.Log.Info("创建", "ns", req.NamespacedName)
+		log.Log.Info("Create", "ns", req.NamespacedName)
 		return r.Client.Create(context.Background(), nginxdeployment)
 	} else {
-		log.Log.Info("更新", "ns", req.NamespacedName)
+		log.Log.Info("Update", "ns", req.NamespacedName)
 		return r.Client.Update(context.Background(), nginxdeployment)
 	}
 }
