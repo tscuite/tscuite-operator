@@ -54,30 +54,27 @@ type NginxReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.10.0/pkg/reconcile
 func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
-
-	// your logic here
-	nginx := &tscuitev1.Nginx{}
-	if err := r.Get(ctx, req.NamespacedName, nginx); err != nil {
+	NginxV1 := &tscuitev1.Nginx{}
+	NginxPod := r.NginxDeployment(NginxV1)
+	if err := r.Get(ctx, req.NamespacedName, NginxV1); err != nil {
 		fmt.Println(err)
 	} else {
-		err = Deployment(r.Client, nginx)
-		return ctrl.Result{}, err
+		return ctrl.Result{}, r.NginxOperator(ctx, req, NginxPod)
 	}
 	return ctrl.Result{}, nil
 }
-func Operator(client client.Client, deployment *appsv1.Deployment) error {
-	//新建
-	//err := client.Create(context.Background(), deployment)
-	//更新
-	err := client.Update(context.Background(), deployment)
-	return err
+func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
+	if err := r.Client.Get(ctx, req.NamespacedName, nginxdeployment); err != nil {
+		fmt.Print("创建")
+		return r.Client.Create(context.Background(), nginxdeployment)
+	} else {
+		fmt.Print("更新")
+		return r.Client.Update(context.Background(), nginxdeployment)
+	}
 }
-func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
-	//var memory corev1.ResourceRequirements
+func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deployment {
 	var replicas int32 = nginx.Spec.Replicas
-	//data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
-	//json.Unmarshal([]byte(data), &memory)
-	deployment := &appsv1.Deployment{
+	return &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      nginx.Name,
 			Namespace: nginx.Namespace,
@@ -128,11 +125,6 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 								SuccessThreshold:    1,
 								TimeoutSeconds:      5,
 								Handler: corev1.Handler{
-									//HTTPGet: &corev1.HTTPGetAction{
-									//	Path:   "/ready",
-									//	Scheme: "HTTP",
-									//	Port:   intstr.FromInt(int(nginx.Spec.Port)),
-									//},
 									TCPSocket: &corev1.TCPSocketAction{
 										Port: intstr.FromInt(int(nginx.Spec.Port)),
 									},
@@ -144,11 +136,6 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 								SuccessThreshold: 1,
 								TimeoutSeconds:   1,
 								Handler: corev1.Handler{
-									//HTTPGet: &corev1.HTTPGetAction{
-									//	Path:   "/ready",
-									//	Scheme: "HTTP",
-									//	Port:   intstr.FromInt(int(nginx.Spec.Port)),
-									//},
 									TCPSocket: &corev1.TCPSocketAction{
 										Port: intstr.FromInt(int(nginx.Spec.Port)),
 									},
@@ -160,7 +147,6 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 			},
 		},
 	}
-	return Operator(client, deployment)
 }
 
 // SetupWithManager sets up the controller with the Manager.
