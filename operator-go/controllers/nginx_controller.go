@@ -67,7 +67,6 @@ func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, n
 		log.Log.Info("Create", "ns", req.NamespacedName)
 		return r.Client.Create(context.Background(), nginxdeployment)
 	} else {
-		//loge := r.Client.Update(context.Background(), nginxdeployment)
 		log.Log.Info("Update", "ns", req.NamespacedName)
 		return r.Client.Update(context.Background(), nginxdeployment)
 
