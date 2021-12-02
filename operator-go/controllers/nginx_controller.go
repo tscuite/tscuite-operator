@@ -65,10 +65,10 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 }
 func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
 	if err := r.Client.Get(ctx, req.NamespacedName, nginxdeployment); err != nil {
-		fmt.Print("创建")
+		log.Log.Info("创建", err.Error())
 		return r.Client.Create(context.Background(), nginxdeployment)
 	} else {
-		fmt.Print("更新")
+		log.Log.Info("更新", err.Error())
 		return r.Client.Update(context.Background(), nginxdeployment)
 	}
 }
