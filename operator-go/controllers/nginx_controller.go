@@ -57,6 +57,7 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	if err := r.Get(ctx, req.NamespacedName, NginxV1); err != nil {
 		log.Log.Error(err, "ns", req.NamespacedName)
 	} else {
+		log.Log.Info("Info", "ns", req.NamespacedName)
 		return ctrl.Result{}, r.NginxOperator(ctx, req, r.NginxDeployment(NginxV1))
 	}
 	return ctrl.Result{}, nil
@@ -66,12 +67,13 @@ func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, n
 		log.Log.Info("Create", "ns", req.NamespacedName)
 		return r.Client.Create(context.Background(), nginxdeployment)
 	} else {
+		//loge := r.Client.Update(context.Background(), nginxdeployment)
 		log.Log.Info("Update", "ns", req.NamespacedName)
 		return r.Client.Update(context.Background(), nginxdeployment)
+
 	}
 }
 func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deployment {
-	var replicas int32 = nginx.Spec.Replicas
 	return &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      nginx.Name,
@@ -81,7 +83,7 @@ func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deploy
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
-			Replicas: &replicas,
+			Replicas: int32Ptr2(nginx.Spec.Replicas),
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
 					"app": nginx.Name,
@@ -145,6 +147,7 @@ func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deploy
 		},
 	}
 }
+func int32Ptr2(i int32) *int32 { return &i }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *NginxReconciler) SetupWithManager(mgr ctrl.Manager) error {
