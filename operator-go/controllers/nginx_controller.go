@@ -19,6 +19,7 @@ package controllers
 import (
 	"context"
 	"fmt"
+	tscuitelog "log"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -65,10 +66,11 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 }
 func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
 	if err := r.Client.Get(ctx, req.NamespacedName, nginxdeployment); err != nil {
-		log.Log.Info("创建", err.Error())
+		//log.Log.Info("创建", err.Error())
+		tscuitelog.Fatal("创建", err.Error())
 		return r.Client.Create(context.Background(), nginxdeployment)
 	} else {
-		log.Log.Info("更新", err.Error())
+		tscuitelog.Fatal("更新", err.Error())
 		return r.Client.Update(context.Background(), nginxdeployment)
 	}
 }
