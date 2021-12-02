@@ -18,7 +18,6 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -56,10 +55,9 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 	_ = log.FromContext(ctx)
 	NginxV1 := &tscuitev1.Nginx{}
 	if err := r.Get(ctx, req.NamespacedName, NginxV1); err != nil {
-		fmt.Println(err)
+		log.Log.Error(err, "ns", req.NamespacedName)
 	} else {
-		NginxPod := r.NginxDeployment(NginxV1)
-		return ctrl.Result{}, r.NginxOperator(ctx, req, NginxPod)
+		return ctrl.Result{}, r.NginxOperator(ctx, req, r.NginxDeployment(NginxV1))
 	}
 	return ctrl.Result{}, nil
 }
