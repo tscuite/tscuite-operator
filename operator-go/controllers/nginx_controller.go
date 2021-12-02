@@ -128,10 +128,13 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 								SuccessThreshold:    1,
 								TimeoutSeconds:      5,
 								Handler: corev1.Handler{
-									HTTPGet: &corev1.HTTPGetAction{
-										Path:   "/ready",
-										Scheme: "HTTP",
-										Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									//HTTPGet: &corev1.HTTPGetAction{
+									//	Path:   "/ready",
+									//	Scheme: "HTTP",
+									//	Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									//},
+									TCPSocket: &corev1.TCPSocketAction{
+										Port: intstr.FromInt(int(nginx.Spec.Port)),
 									},
 								},
 							},
@@ -141,10 +144,13 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 								SuccessThreshold: 1,
 								TimeoutSeconds:   1,
 								Handler: corev1.Handler{
-									HTTPGet: &corev1.HTTPGetAction{
-										Path:   "/ready",
-										Scheme: "HTTP",
-										Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									//HTTPGet: &corev1.HTTPGetAction{
+									//	Path:   "/ready",
+									//	Scheme: "HTTP",
+									//	Port:   intstr.FromInt(int(nginx.Spec.Port)),
+									//},
+									TCPSocket: &corev1.TCPSocketAction{
+										Port: intstr.FromInt(int(nginx.Spec.Port)),
 									},
 								},
 							},
