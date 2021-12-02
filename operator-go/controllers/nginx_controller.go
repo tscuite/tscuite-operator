@@ -18,11 +18,11 @@ package controllers
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/intstr"
@@ -73,10 +73,10 @@ func Operator(client client.Client, deployment *appsv1.Deployment) error {
 	return err
 }
 func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
-	var memory corev1.ResourceRequirements
+	//var memory corev1.ResourceRequirements
 	var replicas int32 = nginx.Spec.Replicas
-	data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
-	json.Unmarshal([]byte(data), &memory)
+	//data := `{"limits": {"cpu":"2000m", "memory": "1Gi"}, "requests": {"cpu":"2000m", "memory": "1Gi"}}`
+	//json.Unmarshal([]byte(data), &memory)
 	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      nginx.Name,
@@ -101,8 +101,18 @@ func Deployment(client client.Client, nginx *tscuitev1.Nginx) error {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{Name: nginx.Name,
-							Image:           nginx.Spec.Images,
-							Resources:       memory,
+							Image: nginx.Spec.Images,
+							//Resources:       memory,
+							Resources: corev1.ResourceRequirements{
+								Limits: corev1.ResourceList{
+									corev1.ResourceCPU:    resource.MustParse("10m"),
+									corev1.ResourceMemory: resource.MustParse("32Mi"),
+								},
+								Requests: corev1.ResourceList{
+									corev1.ResourceCPU:    resource.MustParse("10m"),
+									corev1.ResourceMemory: resource.MustParse("32Mi"),
+								},
+							},
 							ImagePullPolicy: corev1.PullIfNotPresent,
 							Ports: []corev1.ContainerPort{
 								{
