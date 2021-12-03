@@ -58,19 +58,25 @@ func (r *NginxReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 		log.Log.Error(err, "ns", req.NamespacedName)
 	} else {
 		log.Log.Info("Info", "ns", req.NamespacedName)
-		return ctrl.Result{}, r.NginxOperator(ctx, req, r.NginxDeployment(NginxV1))
+		if err := r.NginxOperatorGet(ctx, req, r.NginxDeployment(NginxV1)); err != nil {
+			return ctrl.Result{}, r.NginxOperatorCreate(r.Client, req, r.NginxDeployment(NginxV1))
+		} else {
+			return ctrl.Result{}, r.NginxOperatorUpdate(r.Client, req, r.NginxDeployment(NginxV1))
+		}
 	}
 	return ctrl.Result{}, nil
 }
-func (r *NginxReconciler) NginxOperator(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
-	if err := r.Client.Get(ctx, req.NamespacedName, nginxdeployment); err != nil {
-		log.Log.Info("Create", "ns", req.NamespacedName)
-		return r.Client.Create(context.Background(), nginxdeployment)
-	} else {
-		log.Log.Info("Update", "ns", req.NamespacedName)
-		return r.Client.Update(context.Background(), nginxdeployment)
 
-	}
+func (r *NginxReconciler) NginxOperatorGet(ctx context.Context, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
+	return r.Client.Get(ctx, req.NamespacedName, nginxdeployment)
+}
+func (r *NginxReconciler) NginxOperatorCreate(client client.Client, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
+	log.Log.Info("Create", "ns", req.NamespacedName)
+	return client.Create(context.Background(), nginxdeployment)
+}
+func (r *NginxReconciler) NginxOperatorUpdate(client client.Client, req ctrl.Request, nginxdeployment *appsv1.Deployment) error {
+	log.Log.Info("Update", "ns", req.NamespacedName)
+	return client.Update(context.Background(), nginxdeployment)
 }
 func (r *NginxReconciler) NginxDeployment(nginx *tscuitev1.Nginx) *appsv1.Deployment {
 	return &appsv1.Deployment{
