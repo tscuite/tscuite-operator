@@ -17,13 +17,17 @@ limitations under the License.
 package main
 
 import (
+	"context"
 	"flag"
+	"net"
 	"os"
+	"strconv"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
+	pb "github.com/EDDYCJY/go-grpc-example/proto"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -33,6 +37,9 @@ import (
 
 	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
 	"github.com/tscuite/crd/operator-go/controllers"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -49,9 +56,12 @@ func init() {
 }
 
 func main() {
+	//end := make(chan bool, 1)
+	go RunGrpc()
 	var metricsAddr string
 	var enableLeaderElection bool
 	var probeAddr string
+
 	flag.StringVar(&metricsAddr, "metrics-bind-address", ":8080", "The address the metric endpoint binds to.")
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
@@ -100,5 +110,30 @@ func main() {
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
 		setupLog.Error(err, "problem running manager")
 		os.Exit(1)
+		//<-end
 	}
+}
+
+func RunGrpc() {
+	list, err := net.Listen("tcp", ":8082")
+	log.Log.Info("grpc:8082")
+	if err != nil {
+		log.Log.Info("grpc err=%s", err)
+	}
+
+	s := grpc.NewServer()
+	pb.RegisterSearchServiceServer(s, &SearchService{})
+	reflection.Register(s)
+	if err := s.Serve(list); err != nil {
+		log.Log.Info("failed to serve: %v", err)
+	}
+}
+
+type SearchService struct{}
+
+func (s *SearchService) Search(ctx context.Context, r *pb.SearchRequest) (*pb.SearchResponse, error) {
+	log.Log.Info("收到了一条来自客户端的消息: " + r.Request)
+	log.Log.Info("收到了一条来自客户端的消息: " + strconv.FormatInt(int64(r.XXX_sizecache), 10))
+
+	return &pb.SearchResponse{Response: r.GetRequest() + " HTTP 服务端给你返回的消息"}, nil
 }
