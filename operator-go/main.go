@@ -27,7 +27,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	pb "gitee.com/tscuite/crd/operator-go/proto"
+	pb "gitee.com/tscuite/tscuite-operator/operator-go/grpc"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -35,8 +35,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	tscuitev1 "github.com/tscuite/crd/operator-go/api/v1"
-	"github.com/tscuite/crd/operator-go/controllers"
+	tscuitev1 "gitee.com/tscuite/tscuite-operator/operator-go/api/v1"
+	"gitee.com/tscuite/tscuite-operator/operator-go/controllers"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"sigs.k8s.io/controller-runtime/pkg/log"

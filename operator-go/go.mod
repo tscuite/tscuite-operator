@@ -1,4 +1,4 @@
-module github.com/tscuite/crd/operator-go
+module gitee.com/tscuite/tscuite-operator/operator-go
 
 go 1.16
 
