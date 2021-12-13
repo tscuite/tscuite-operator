@@ -1,11 +1,6 @@
 syntax = "proto3";// 协议为proto3
-
 package proto;
 option go_package = "./";
-
-service SearchService {
-    rpc Search(SearchRequest) returns (SearchResponse) {}
-}
 
 message SearchRequest {
     string request = 1;
@@ -13,4 +8,8 @@ message SearchRequest {
 
 message SearchResponse {
     string response = 1;
+}
+
+service SearchService {
+    rpc Search(SearchRequest) returns (SearchResponse) {}
 }
