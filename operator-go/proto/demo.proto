@@ -4,7 +4,6 @@ package proto;
 option go_package = "./";
 //定义发送信息
 message SimpleRequest{
-    // 定义发送的参数，采用驼峰命名方式，小写加下划线，如：student_name
     string data = 1;//发送数据
 }
 //定义响应信息
