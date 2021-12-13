@@ -1,4 +1,4 @@
-syntax = "proto3";// 协议为proto3
+syntax = "proto3";
 package proto;
 option go_package = "./";
 
