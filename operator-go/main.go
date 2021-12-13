@@ -27,7 +27,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	pb "gitee.com/tscuite/tscuite-operator/operator-go/grpc"
+	pb "gitee.com/tscuite/tscuite-operator/operator-go/proto"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
