@@ -27,7 +27,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	pb "github.com/EDDYCJY/go-grpc-example/proto"
+	pb "gitee.com/tscuite/crd/operator-go/proto"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -136,4 +136,10 @@ func (s *SearchService) Search(ctx context.Context, r *pb.SearchRequest) (*pb.Se
 	log.Log.Info("收到了一条来自客户端的消息: " + strconv.FormatInt(int64(r.XXX_sizecache), 10))
 
 	return &pb.SearchResponse{Response: r.GetRequest() + " HTTP 服务端给你返回的消息"}, nil
+}
+func (s *SearchService) Saarch(ctx context.Context, r *pb.SearchRequest) (*pb.SearchResponse, error) {
+	log.Log.Info("收到了一条来自客户端的消息2: " + r.Request)
+	log.Log.Info("收到了一条来自客户端的消息2: " + strconv.FormatInt(int64(r.XXX_sizecache), 10))
+
+	return &pb.SearchResponse{Response: r.GetRequest() + " HTTP 2服务端给你返回的消息"}, nil
 }
