@@ -3,7 +3,7 @@ module github.com/heptiolabs/eventrouter
 go 1.12
 
 require (
-	gitee.com/tscuite/tscuite-operator v1.1.5
+	gitee.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf
 	github.com/Azure/azure-event-hubs-go/v2 v2.0.3
 	github.com/Shopify/sarama v1.23.1
 	github.com/aws/aws-sdk-go v1.23.2
@@ -19,8 +19,7 @@ require (
 	github.com/rockset/rockset-go-client v0.6.0
 	github.com/sethgrid/pester v0.0.0-20190127155807-68a33a018ad0
 	github.com/spf13/viper v1.4.0
-	google.golang.org/grpc v1.21.0
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/grpc v1.42.0
 	gopkg.in/jcmturner/goidentity.v3 v3.0.0 // indirect
 	k8s.io/api v0.0.0-20190814101207-0772a1bdf941
 	k8s.io/apimachinery v0.0.0-20190814100815-533d101be9a6
