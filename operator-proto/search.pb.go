@@ -4,7 +4,7 @@
 // 	protoc        v3.19.1
 // source: search.proto
 
-package operator-proto
+package proto
 
 import (
 	context "context"
