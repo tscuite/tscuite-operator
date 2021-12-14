@@ -17,11 +17,13 @@ limitations under the License.
 package sinks
 
 import (
+	"context"
 	"encoding/json"
-	"google.golang.org/grpc"
-	proto "gitee.com/tscuite/tscuite-operator/operator-go/proto"
+
+	proto "gitee.com/tscuite/tscuite-operator/operator-proto"
 	"github.com/golang/glog"
-	"k8s.io/api/core/v1"
+	"google.golang.org/grpc"
+	v1 "k8s.io/api/core/v1"
 )
 
 // GlogSink is the most basic sink
@@ -51,9 +53,6 @@ func (gs *GlogSink) UpdateEvents(eNew *v1.Event, eOld *v1.Event) {
 		glog.Warningf("Failed to json serialize event: %v", err)
 	}
 }
-
-
-
 
 const PORT = "192.168.6.229:8082"
 
