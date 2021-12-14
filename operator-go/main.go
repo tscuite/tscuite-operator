@@ -26,7 +26,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	operatorproto "gitee.com/tscuite/tscuite-operator/operator-proto"
+	proto "gitee.com/tscuite/tscuite-operator/operator-proto"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -121,7 +121,7 @@ func RunGrpc() {
 	}
 
 	s := grpc.NewServer()
-	operatorproto.RegisterSearchServiceServer(s, &SearchService{})
+	proto.RegisterSearchServiceServer(s, &SearchService{})
 	reflection.Register(s)
 	if err := s.Serve(list); err != nil {
 		log.Log.Info("failed to serve: %v", err)
@@ -130,7 +130,7 @@ func RunGrpc() {
 
 type SearchService struct{}
 
-func (s *SearchService) Search(ctx context.Context, r *operatorproto.SearchRequest) (*operatorproto.SearchResponse, error) {
+func (s *SearchService) Search(ctx context.Context, r *proto.SearchRequest) (*proto.SearchResponse, error) {
 	log.Log.Info("收到了一条来自客户端的消息: " + r.Request)
-	return &operatorproto.SearchResponse{Response: r.GetRequest() + "服务端给你返回的消息"}, nil
+	return &proto.SearchResponse{Response: r.GetRequest() + "服务端给你返回的消息"}, nil
 }
