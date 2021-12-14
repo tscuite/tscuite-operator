@@ -4,7 +4,7 @@
 // 	protoc        v3.19.1
 // source: demo.proto
 
-package __
+package operator-proto
 
 import (
 	context "context"

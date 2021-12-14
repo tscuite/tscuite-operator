@@ -4,7 +4,7 @@
 // 	protoc        v3.19.1
 // source: stream.proto
 
-package __
+package proto
 
 import (
 	context "context"
