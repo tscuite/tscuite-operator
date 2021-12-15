@@ -26,9 +26,9 @@ import (
 	"time"
 
 	"github.com/golang/glog"
+	"github.com/heptiolabs/eventrouter/eve"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/viper"
-
 	"k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -111,7 +111,7 @@ func main() {
 	eventsInformer := sharedInformers.Core().V1().Events()
 
 	// TODO: Support locking for HA https://github.com/kubernetes/kubernetes/pull/42666
-	eventRouter := NewEventRouter(clientset, eventsInformer)
+	eventRouter := eve.NewEventRouter(clientset, eventsInformer)
 	stop := sigHandler()
 
 	// Startup the http listener for Prometheus Metrics endpoint.
