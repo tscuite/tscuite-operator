@@ -3,7 +3,7 @@ module github.com/heptiolabs/eventrouter
 go 1.12
 
 require (
-	gitee.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf
+	gitee.com/tscuite/tscuite-operator/operator-proto v1.1.5
 	github.com/Azure/azure-event-hubs-go/v2 v2.0.3
 	github.com/Shopify/sarama v1.23.1
 	github.com/aws/aws-sdk-go v1.23.2
