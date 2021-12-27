@@ -9,7 +9,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	proto "gitee.com/tscuite/tscuite-operator/operator-proto"
+	proto "github.com/tscuite/tscuite-operator/operator-proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

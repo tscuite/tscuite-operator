@@ -2,8 +2,8 @@ cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 contrib.go.opencensus.io/exporter/ocagent v0.5.0 h1:TKXjQSRS0/cCDrP7KvkgU6SmILtF/yV2TOs/02K/WZQ=
 contrib.go.opencensus.io/exporter/ocagent v0.5.0/go.mod h1:ImxhfLRpxoYiSq891pBrLVhN+qmP8BTVvdH2YLs7Gl0=
-gitee.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf h1:GShtk0L2lK+MY4Ac8zaVx2DepHBjCQ8HmXBejTaWsxI=
-gitee.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf/go.mod h1:iK3Y4YYzBYEK4CihY9acsDK0saddd8WI2q6yKu2WyC8=
+github.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf h1:GShtk0L2lK+MY4Ac8zaVx2DepHBjCQ8HmXBejTaWsxI=
+github.com/tscuite/tscuite-operator/operator-proto v0.0.0-20211214090759-d997f35107bf/go.mod h1:iK3Y4YYzBYEK4CihY9acsDK0saddd8WI2q6yKu2WyC8=
 github.com/Azure/azure-amqp-common-go/v2 v2.1.0 h1:+QbFgmWCnPzdaRMfsI0Yb6GrRdBj5jVL8N3EXuEUcBQ=
 github.com/Azure/azure-amqp-common-go/v2 v2.1.0/go.mod h1:R8rea+gJRuJR6QxTir/XuEd+YuKoUiazDC/N96FiDEU=
 github.com/Azure/azure-event-hubs-go/v2 v2.0.3 h1:4ilH4G/DpTHAzSOH1HodoQC5PBrJ0t28fHbI3G2/49A=

@@ -30,7 +30,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	tscuitev1 "gitee.com/tscuite/tscuite-operator/operator-go/api/v1"
+	tscuitev1 "github.com/tscuite/tscuite-operator/operator-go/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 

@@ -20,8 +20,8 @@ import (
 	"context"
 	"encoding/json"
 
-	proto "gitee.com/tscuite/tscuite-operator/operator-proto"
 	"github.com/golang/glog"
+	proto "github.com/tscuite/tscuite-operator/operator-proto"
 	"google.golang.org/grpc"
 	v1 "k8s.io/api/core/v1"
 )

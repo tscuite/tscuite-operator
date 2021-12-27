@@ -1,4 +1,4 @@
-module gitee.com/tscuite/tscuite-operator/operator-proto
+module github.com/tscuite/tscuite-operator/operator-proto
 
 go 1.17
 
