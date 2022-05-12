@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests
+      uses: nick-invision/retry@v2
+      with:
+        timeout_seconds: 30
+        max_attempts: 3
+        command: docker pull cdz.com/ali
