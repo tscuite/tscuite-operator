@@ -19,5 +19,5 @@ jobs:
       with:
         timeout_seconds: 30
         max_attempts: 30
-        retry_on: timeout
+        #retry_on: timeout
         command: docker pull cdz.com/ali
