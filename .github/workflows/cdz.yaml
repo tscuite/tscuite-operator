@@ -1,4 +1,4 @@
-
+name: cdz
 on:
   push:
     branches:    
