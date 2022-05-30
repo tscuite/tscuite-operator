@@ -8,4 +8,12 @@ jobs:
     #if:  startsWith(github.head_ref, 'releases/')
     runs-on: ubuntu-latest
     steps:
-      - run: echo "The head of this PR starts with 'releases/'"
+      - name: Check out branch
+        uses: actions/checkout@v2
+      - name: git
+        shell: bash
+        run: |
+          git branch 
+          git checkout -b pr@20220530@${{github.run_number}}
+          git remote set-url origin --push --add 'https://github.com/tscuite/tscuite.git'
+          git push --set-upstream origin pr@20220530@${{github.run_number}}
