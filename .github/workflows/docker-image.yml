@@ -18,12 +18,13 @@ jobs:
       run: |
         sudo bash -c "echo '47.95.181.38 registry.cn-beijing.aliyuncs.com' >> /etc/hosts"
         cat /etc/hosts
-    - name: Run tests
-      uses: nick-invision/retry@v2
-      with:
-        timeout_seconds: 30
-        max_attempts: 30
-        #retry_on: timeout
-        command: docker pull registry.cn-beijing.aliyuncs.com/huoxian_pub/dongtai-server:1.8.3
+        docker pull registry.cn-beijing.aliyuncs.com/huoxian_pub/dongtai-server:1.8.3
+#     - name: Run tests
+#       uses: nick-invision/retry@v2
+#       with:
+#         timeout_seconds: 30
+#         max_attempts: 30
+#         #retry_on: timeout
+#         command: docker pull registry.cn-beijing.aliyuncs.com/huoxian_pub/dongtai-server:1.8.3
         
 
