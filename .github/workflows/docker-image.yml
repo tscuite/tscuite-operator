@@ -24,6 +24,6 @@ jobs:
         timeout_seconds: 30
         max_attempts: 30
         #retry_on: timeout
-        command: docker pull registry.cn-hangzhou.aliyuncs.com/tscuite/controller:v0.44.0
+        command: docker pull registry.cn-beijing.aliyuncs.com/huoxian_pub/dongtai-web:1.8.1
         
 
