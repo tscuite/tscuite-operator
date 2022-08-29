@@ -17,6 +17,7 @@ jobs:
     - name: Download Agent
       run: |
         sudo bash -c "echo '47.95.181.38 registry.cn-beijing.aliyuncs.com' >> /etc/hosts"
+        cat /etc/hosts
     - name: Run tests
       uses: nick-invision/retry@v2
       with:
