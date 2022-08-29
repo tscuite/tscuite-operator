@@ -24,6 +24,6 @@ jobs:
         timeout_seconds: 30
         max_attempts: 30
         #retry_on: timeout
-        command: docker pull nginx
+        command: docker pull registry.cn-hangzhou.aliyuncs.com/tscuite/controller:v0.44.0
         
 
