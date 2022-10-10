@@ -42,3 +42,39 @@ jobs:
       - name: Install tools
         run: |
           ls -lh
+
+  pro:
+    name: Acceptance pro
+    needs: test
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install tools
+        run: |
+          ls -lh
+          
+  pro2:
+    name: Acceptance pro2
+    needs: test
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install tools
+        run: |
+          ls -lh
