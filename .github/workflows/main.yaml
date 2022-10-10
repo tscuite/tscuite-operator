@@ -1,11 +1,11 @@
-name: check_generated_code_drift
+name: main
 on:
   push:
     branches:
       - main
 
 jobs:
-  check_generated_code_drift:
+  start:
     name: Check Generated Code for Drift
     runs-on: ubuntu-latest
     steps:
@@ -24,3 +24,21 @@ jobs:
         if: steps.selefra.outputs.selefra == 'true'
         run: |
           bash .github/scripts/terraform.sh
+
+  test:
+    name: Acceptance tests
+    needs: goreleaser
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install tools
+        run: |
+          ls
