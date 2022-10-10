@@ -1,4 +1,4 @@
-name: cdz
+name: main
 on:
   push:
     branches:
