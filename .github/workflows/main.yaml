@@ -27,7 +27,7 @@ jobs:
 
   test:
     name: Acceptance tests
-    needs: goreleaser
+    needs: start
     strategy:
       matrix:
         platform: [ubuntu-latest]
