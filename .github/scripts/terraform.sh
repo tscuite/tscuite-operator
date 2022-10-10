@@ -6,7 +6,7 @@ echo git status -s .github  | wc -l
 
 for f in terraform/*; do
     if [ -d $f ]; then
-        cd $f/prod
+        cd $f/pro
         # This takes into account we always use squash and this runs on push even
         CHANGES=$(git diff --name-only HEAD..HEAD~1 ../)
         # if there are any changes run terraform apply
