@@ -2,7 +2,7 @@
 
 set -e
 
-echo git status -s terraform | wc -l
+git status -s terraform 
 
 for f in terraform/*; do
     if [ -d $f ]; then
