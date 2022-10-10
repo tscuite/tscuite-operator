@@ -18,6 +18,7 @@ jobs:
           filters: |
             selefra:
               - '.github/workflows/**/*'
+              - '.gitgub/scripts/**/*'
               - 'terraform/**/*'
       - name: Install tools
         if: steps.selefra.outputs.selefra == 'true'
