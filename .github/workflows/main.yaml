@@ -23,7 +23,7 @@ jobs:
               - 'terraform/**/*'
             rules:
               - '.github/workflows/**/*'
-              - '.gitgub/scripts/**/*'
+              - '.github/scripts/**/*'
 
       - name: Terraform apply
         if: steps.selefra.outputs.terraform == 'true'
