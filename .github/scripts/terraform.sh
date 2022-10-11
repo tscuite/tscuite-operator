@@ -2,9 +2,9 @@
 
 set -e
 
-if $1 == "aws"; then
+if [[ "$1" = "aws" ]]; then
   echo "shell aws"
-elif $1 == "rules"; then
+elif [[ "$1" = "rules" ]]; then
   echo "shell rules"
 else
   echo "Invalid argument"
