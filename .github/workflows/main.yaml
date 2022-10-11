@@ -5,76 +5,41 @@ on:
       - main
 
 jobs:
-  start:
+  init:
     name: Check Generated Code for Drift
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.7
       - uses: dorny/paths-filter@v2
         id: selefra
         with:
           filters: |
-            selefra:
+            terraform:
+              - 'terraform/**/*'
+            rules:
               - '.github/workflows/**/*'
               - '.gitgub/scripts/**/*'
-              - 'terraform/**/*'
-      - name: Install tools
-        if: steps.selefra.outputs.selefra == 'true'
+
+      - name: Terraform apply
+        if: steps.selefra.outputs.terraform == 'true'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          bash .github/scripts/terraform.sh
+          bash .github/scripts/terraform.sh aws
+          #terraform init
+          #terraform plan -no-color
+          #terraform validate -no-color
+        continue-on-error: true
 
-  test:
-    name: Acceptance tests
-    needs: start
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          ref: ${{ github.event.inputs.branch }}
-
-      - name: Install tools
+      - name: rules
+        if: steps.selefra.outputs.rules == 'true'
         run: |
-          ls -lh
+          #运行规则 selefra init
+          bash .github/scripts/terraform.sh rules
 
-  pro:
-    name: Acceptance pro
-    needs: test
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          ref: ${{ github.event.inputs.branch }}
-
-      - name: Install tools
-        run: |
-          ls -lh
-          
-  pro2:
-    name: Acceptance pro2
-    needs: test
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          ref: ${{ github.event.inputs.branch }}
-
-      - name: Install tools
-        run: |
-          ls -lh
