@@ -1,0 +1,6 @@
+0a53a1efe0c54ca2722a8199ef44c0064d7ed38dc3a3a8ea57f729d676b18c53  selefra-provider-aws_0.0.3_darwin_arm64.tar.gz
+36914147ec8eff177e6fb98dd356c5d334828080232b79cea1a382652118ae27  selefra-provider-aws_0.0.3_darwin_amd64.tar.gz
+3acc2cdb70ac2a85b9bdee4edea5af04035484e0b88c9802147a93bcfe0279d7  selefra-provider-aws_0.0.3_windows_amd64.tar.gz
+4b4d18d6d568a6458d5bfdf4453a808aa74c531e656686613730a09cb547c265  selefra-provider-aws_0.0.3_linux_amd64.tar.gz
+60eb95af478e78b44ed3cf9597761aef79dac99c56ab7c92ae36c9d306f32f07  selefra-provider-aws_0.0.3_linux_arm64.tar.gz
+823fe1550671beeb187619bc2d566424bdda5c7e98a096201b7e61bb3bd60a78  selefra-provider-aws_0.0.3_windows_arm64.tar.gz
