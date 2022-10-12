@@ -46,8 +46,8 @@ jobs:
         name: Upload assets
         uses: actions/upload-artifact@v3
         with:
-          name: myapp
-          path: dist/*
+          name: selefra
+          path: dist/*.tar.gz
 
       # - name: rules
       #   if: steps.selefra.outputs.rules == 'true'
