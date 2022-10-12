@@ -44,13 +44,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd /tmp/ && git clone https://SELEFRA_TOKEN@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
-          #cp ../selefra-provider-aws_*_checksums.txt .
-          #&& cp $GITHUB_WORKSPACE/dist/selefra-provider-aws_*_checksums.txt . && bash registry.sh version \
           && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh version \
           && cd provider/aws/ && git add . && git commit -m "update aws provider to $version" && git push 
-          #&& git remote set-url origin --push --add '${{ secrets.DONGTAI_GITHUB_TOKEN_ALL }}' \
-          #&& git push --set-upstream origin main
 
-          #运行规则 selefra init
-          #bash .github/scripts/terraform.sh rules
+
+
 
