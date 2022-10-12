@@ -41,9 +41,9 @@ jobs:
         if: steps.selefra.outputs.rules == 'true'
         env: 
           version: v0.0.6
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SELEFRA_TOKEN: ${{ secrets.SELEFRA_TOKEN }}
         run: |
-          cd /tmp/ && git clone https://SELEFRA_TOKEN@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
+          cd /tmp/ && git clone https://${SELEFRA_TOKEN}@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
           && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh version \
           && cd provider/aws/ && git config --global user.name "$GITHUB_ACTOR-bot" \
           && git config --global user.email "$GITHUB_ACTOR-bot@selefra.io" \
