@@ -32,9 +32,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           #bash .github/scripts/terraform.sh aws
-          #terraform init
-          #terraform plan -no-color
-          #terraform validate -no-color
         continue-on-error: true
 
       - name: rules
