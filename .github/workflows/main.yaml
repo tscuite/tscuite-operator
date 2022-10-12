@@ -40,7 +40,7 @@ jobs:
       - name: rules
         if: steps.selefra.outputs.rules == 'true'
         env: 
-          version: 0.0.6
+          version: v0.0.6
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd /tmp/ && git clone https://SELEFRA_TOKEN@github.com/tscuite/registry.git && cd registry/ && cp .github/scripts/registry.sh . \
