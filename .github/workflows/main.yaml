@@ -43,7 +43,7 @@ jobs:
           version: v0.0.6
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          cd /tmp/ && git clone https://SELEFRA_TOKEN@github.com/tscuite/registry.git && cd registry/ && cp .github/scripts/registry.sh . \
+          cd /tmp/ && git clone https://SELEFRA_TOKEN@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
           #cp ../selefra-provider-aws_*_checksums.txt .
           #&& cp $GITHUB_WORKSPACE/dist/selefra-provider-aws_*_checksums.txt . && bash registry.sh version \
           && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh version \
