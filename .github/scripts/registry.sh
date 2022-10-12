@@ -11,6 +11,7 @@ case "$(uname)" in
 esac
 
 version=$1
+time=$(date "+%Y-%m-%d")
 VERSION=`cat provider/aws/metadata.yaml | grep 'latest-version' | awk -F ' ' '{print $2}'`
 FOR=`cat selefra-provider-aws* | awk -F '_' '{print $3,$4}' | awk -F '.' '{print $1}' |  sed "s# #_#g"`
 if [ -d "provider/aws/$version" ];then rm -rf provider/aws/$version ; else echo "OK!"; fi && cp -r provider/template/version1 provider/aws/$version
@@ -37,7 +38,7 @@ if [[ "$VERSION" != "$version" ]]; then
   cp provider/template/metadata.yaml provider/template/metadata.yaml.bak
   sed "${sedi[@]}" "s#{{.ProviderName}}#aws#g" provider/template/metadata.yaml 
   sed "${sedi[@]}" "s#{{.LatestVersion}}#${version}#g" provider/template/metadata.yaml
-  sed "${sedi[@]}" "s#{{.LatestUpdated}}#2022-10-10#g" provider/template/metadata.yaml
+  sed "${sedi[@]}" "s#{{.LatestUpdated}}#${time}#g" provider/template/metadata.yaml
   sed "${sedi[@]}" "s#{{.Introduction}}#A Selefra provider for Amazon Web Services (AWS).#g" provider/template/metadata.yaml
   sed "${sedi[@]}" "s#{{.ProviderVersion}}#${version}#g" provider/template/metadata.yaml
   sed "${sedi[@]}" '6d' provider/template/metadata.yaml
