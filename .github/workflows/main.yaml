@@ -34,15 +34,30 @@ jobs:
           #bash .github/scripts/terraform.sh aws
         continue-on-error: true
 
-      - name: rules
-        if: steps.selefra.outputs.rules == 'true'
-        env: 
-          version: v0.0.9
-          SELEFRA_TOKEN: ${{ secrets.SELEFRA_TOKEN }}
-        run: |
-          cd /tmp/ && git clone https://${SELEFRA_TOKEN}@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
-          && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh ${version} && cd provider/aws/ && git config --global user.name "bot" \
-          && git config --global user.email "bot@selefra.io" && git add . && git commit -m "update aws provider to ${version}" && git push 
+      -
+        name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Upload assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: myapp
+          path: dist/*
+
+      # - name: rules
+      #   if: steps.selefra.outputs.rules == 'true'
+      #   env:
+      #     version: v0.0.9
+      #     SELEFRA_TOKEN: ${{ secrets.SELEFRA_TOKEN }}
+      #   run: |
+      #     cd /tmp/ && git clone https://${SELEFRA_TOKEN}@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
+      #     && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh ${version} && cd provider/aws/ && git config --global user.name "bot" \
+      #     && git config --global user.email "bot@selefra.io" && git add . && git commit -m "update aws provider to ${version}" && git push 
 
 
 
