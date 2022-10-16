@@ -1,9 +1,10 @@
-Please ensure your pull request adheres to the following guidelines:
+遵循规范提交 [commit规范](https://www.conventionalcommits.org/en/v1.0.0/)
+推荐三种pr中 commit 前缀，使用下列前缀 commit 会在 release 中展示。
+> Features
+`git commit -m "feat: 新功能"`
+> Bug Fixes
+`git commit -m "fix: 修复的bug"`
+> Miscellaneous
+`git commit -m "chore: 其他的问题"`
 
-- [ ] Use the following format: `* [owner/repo](link)`
-- [ ] Link additions should be added to the bottom of the relevant category.
-- [ ] New categories or improvements to the existing categorization are welcome.
-- [ ] Search previous suggestions before making a new one, as yours may be a duplicate.
-- [ ] Sort by alphabetical order
-
-Thanks for contributing!
+感谢您的提交!
