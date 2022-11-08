@@ -1,75 +1,17 @@
-name: main
-on:
-  push:
-    branches:
-      - mainsdafdasf
+name: RELEASE
 
+on:
+  release:
+    types: [ created, edited ]
+    
 jobs:
-  init:
-    name: Check Generated Code for Drift
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.1.7
-      - uses: dorny/paths-filter@v2
-        id: selefra
-        with:
-          filters: |
-            terraform:
-              - 'terraform/**/*'
-            rules:
-              - '.github/workflows/**/*'
-              - '.github/scripts/**/*'
-
-      - name: Terraform apply
-        if: steps.selefra.outputs.terraform == 'true'
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - id: release
         run: |
-          #bash .github/scripts/terraform.sh aws
-        continue-on-error: true
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
-        with:
-          version: latest
-          args: release --rm-dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload assets
-        uses: actions/upload-artifact@v3
-        with:
-          name: selefra
-          path: dist/*.tar.gz
-      - name: artifact
-        run: |
-          cd dist/ && mv *darwin_amd64.tar.gz selefra_darwin_amd64.tar.gz && mv *darwin_arm64.tar.gz selefra_darwin_arm64.tar.gz && mv *linux_amd64.tar.gz selefra_linux_amd64.tar.gz && mv *linux_arm64.tar.gz selefra_linux_arm64.tar.gz 
-      - uses: keithweaver/aws-s3-github-action@v1.0.0
-        name: Copy Folder
-        with:
-          command: cp
-          source: ./dist/
-          destination: s3://dev-www.selefra.io/app-selefra/
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-1
-          flags: --recursive
-
-      # - name: rules
-      #   if: steps.selefra.outputs.rules == 'true'
-      #   env:
-      #     version: v0.0.9
-      #     SELEFRA_TOKEN: ${{ secrets.SELEFRA_TOKEN }}
-      #   run: |
-      #     cd /tmp/ && git clone https://${SELEFRA_TOKEN}@github.com/tscuite/registry.git && cd registry/ && cp $GITHUB_WORKSPACE/.github/scripts/registry.sh . \
-      #     && cp $GITHUB_WORKSPACE/selefra-provider-aws_*_checksums.txt . && bash registry.sh ${version} && cd provider/aws/ && git config --global user.name "bot" \
-      #     && git config --global user.email "bot@selefra.io" && git add . && git commit -m "update aws provider to ${version}" && git push 
-
-
-
-
+          TAG_NAME=${{ github.event.release.tag_name }}
+          ID=`echo ${TAG_NAME##v}`
+          echo "::set-output name=VERSION::$ID"
