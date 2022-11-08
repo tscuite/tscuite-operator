@@ -15,3 +15,4 @@ jobs:
           TAG_NAME=${{ github.event.release.tag_name }}
           ID=`echo ${TAG_NAME##v}`
           echo "::set-output name=VERSION::$ID"
+          echo "$env"
