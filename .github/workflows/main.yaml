@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!github.event.release.prerelease"
+    if: "github.event.release.prerelease"
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
