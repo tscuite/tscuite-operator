@@ -1,8 +1,11 @@
 name: RELEASE
 
 on:
-  release:
-    types: [ created, edited ]
+  workflow_dispatch:
+    inputs:
+      os_version:
+        required: true
+        type: string
     
 jobs:
   build:
@@ -11,9 +14,14 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
-      - id: release
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ./build/
+          key: ${{ runner.OS }}-py-cache-${{ hashFiles('**/README.md') }}
+          restore-keys: |
+            ${{ runner.OS }}-py-cache-
+      - name: build encryption
         run: |
-          TAG_NAME=${{ github.event.release.tag_name }}
-          ID=`echo ${TAG_NAME##v}`
-          echo "::set-output name=VERSION::$ID"
-          echo "$env"
+          mkdir build
+          touch /build/123.txt
