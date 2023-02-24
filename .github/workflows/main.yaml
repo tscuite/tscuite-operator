@@ -23,4 +23,4 @@ jobs:
       - name: build encryption
         run: |
           mkdir build
-          touch /build/123.txt
+          touch ./build/123.txt
