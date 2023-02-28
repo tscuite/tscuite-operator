@@ -1,11 +1,14 @@
 name: RELEASE
 
 on:
-  workflow_dispatch:
-    inputs:
-      os_version:
-        required: true
-        type: string
+  push:
+    branches: 
+      - "*"
+  # workflow_dispatch:
+  #   inputs:
+  #     os_version:
+  #       required: true
+  #       type: string
     
 jobs:
   build:
@@ -13,6 +16,14 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
       - name: Cache
         uses: actions/cache@v3
         with:
@@ -25,3 +36,13 @@ jobs:
           mkdir build
           touch ./build/123.txt
           cd build && pwd && ls -lh
+      - name: Build ${{ inputs.os_version }}
+        uses: docker/build-push-action@v3
+        with:
+          file: Dockerfile
+          context: .
+          platforms: linux/amd64
+          push: false
+          tags: | 
+            cdz:nginx
+            cdz:nginx
