@@ -20,14 +20,14 @@ on:
     
 jobs:
   init:
-    if: inputs.server_version == 'so_version'
+    if: inputs.name == 'so_version'
     runs-on: ubuntu-latest
     steps:
       - name: init
         run: |
           echo "HXSecurityBusiness"
   init2:
-    if: inputs.server_version == 'server_version'
+    if: inputs.name == 'server_version'
     runs-on: ubuntu-latest
     steps:
       - name: init
