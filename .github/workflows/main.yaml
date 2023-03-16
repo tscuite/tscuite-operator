@@ -22,7 +22,8 @@ jobs:
         uses: docker/setup-qemu-action@v2
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - id: release
+      - name: Set the value
+        id: release
         run: |
           TAG_NAME=${{ github.event.release.tag_name }}
           ID=`echo ${TAG_NAME##v}`
@@ -32,8 +33,9 @@ jobs:
           else
               ID=${{ inputs.server_version }}
           fi
-          echo "::set-output name=VERSION::$ID"
+          echo "iast_version=$ID" >> $GITHUB_ENV
+          
       - name: build encryption
         run: |
-          echo ${{ steps.release.outputs.version }}
+          echo ${{ env.iast_version }}
           echo ${{ inputs.agent_version }}
