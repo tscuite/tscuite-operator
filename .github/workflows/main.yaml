@@ -1,14 +1,16 @@
 name: RELEASE
 
 on:
-  push:
-    branches: 
-      - "*"
-  # workflow_dispatch:
-  #   inputs:
-  #     os_version:
-  #       required: true
-  #       type: string
+  release:
+    types: [ created, edited ]
+  workflow_dispatch:
+    inputs:
+      agent_version:
+        required: true
+        type: string
+      server_version:
+        required: true
+        type: string
     
 jobs:
   build:
@@ -20,29 +22,18 @@ jobs:
         uses: docker/setup-qemu-action@v2
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
-        
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: ./build/
-          key: ${{ runner.OS }}-py-cache-${{ hashFiles('**/README.md') }}
-          restore-keys: |
-            ${{ runner.OS }}-py-cache-
+      - id: release
+        run: |
+          TAG_NAME=${{ github.event.release.tag_name }}
+          ID=`echo ${TAG_NAME##v}`
+          if [ -z "${{ inputs.server_version }}" ]
+          then
+              echo "variable is empty"
+          else
+              ID=${{ inputs.server_version }}
+          fi
+          echo "::set-output name=VERSION::$ID"
       - name: build encryption
         run: |
-          mkdir build
-          touch ./build/123.txt
-          cd build && pwd && ls -lh
-      - name: Build ${{ inputs.os_version }}
-        uses: docker/build-push-action@v3
-        with:
-          file: Dockerfile
-          context: .
-          platforms: linux/amd64
-          push: false
-          tags: | 
-            cdz:nginx
-            cdz:nginx
+          echo ${{ steps.release.outputs.version }}
+          echo ${{ inputs.agent_version }}
