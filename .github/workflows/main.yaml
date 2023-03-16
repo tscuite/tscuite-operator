@@ -5,12 +5,19 @@ on:
     types: [ created, edited ]
   workflow_dispatch:
     inputs:
-      agent_version:
+      name:
+        type: choice
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      message:
         required: true
-        type: string
-      server_version:
-        required: true
-        type: string
+      use-emoji:
+        type: boolean
+        description: Include  emojis
+      environment:
+        type: environment
     
 jobs:
   build:
