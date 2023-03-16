@@ -7,19 +7,32 @@ on:
     inputs:
       name:
         type: choice
-        description: Who to greet
-        options: 
-        - monalisa
-        - cschleiden
-      message:
+        description: life selector
+        options:
+          - so_version
+          - server_version
+      agent_version:
         required: true
-      use-emoji:
-        type: boolean
-        description: Include  emojis
-      environment:
-        type: environment
+        type: string
+      server_version:
+        required: true
+        type: string
     
 jobs:
+  init:
+    if: inputs.server_version == 'so_version'
+    runs-on: ubuntu-latest
+    steps:
+      - name: init
+        run: |
+          echo "HXSecurityBusiness"
+  init2:
+    if: inputs.server_version == 'server_version'
+    runs-on: ubuntu-latest
+    steps:
+      - name: init
+        run: |
+          echo "HXSecurityBusiness"
   build:
     runs-on: ubuntu-latest
     steps:
